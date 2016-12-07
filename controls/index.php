@@ -6,9 +6,9 @@ if(isset($_GET['flag']) && $_GET['flag']==true){
 
 	}
 
-/*if(isLogin()){
+if(isLogin()){
 	site_return('\profile_control.php');
-}*/
+}
 
 include __DIR__.'\..\view\login.php';
 
