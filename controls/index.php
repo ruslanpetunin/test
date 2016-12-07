@@ -15,7 +15,7 @@ setcookie('user', '', time()-55600);
 include __DIR__.'\..\view\login.php';
 
 
-	$arr = [];
+	/*$arr = [];
 	$arr = qdb("select * from users where login='Rusik' and password='12345678';");
-	var_dump($arr);
+	var_dump($arr);*/
 ?>
