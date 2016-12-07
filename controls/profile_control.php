@@ -1,7 +1,9 @@
 <?php
 include __DIR__.'\..\models\function_login.php';
-//var_dump(isLogin());
-autorize();
+
+
+autorize($_POST['login'],$_POST['password']);
+echo __FILE__;
 if(!isLogin()){
 
 	site_return('\index.php');
