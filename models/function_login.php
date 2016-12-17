@@ -1,10 +1,11 @@
 <?php
 session_start();
-include __DIR__.'\function_db.php';
+include __DIR__.'\..\class\class_db.php';
+include __DIR__.'\..\class\class_user.php';
+
 function isLogin(){
-	if(isset($_COOKIE['user'])){$_SESSION['user'] = $_COOKIE['user'];}
-	if(isset($_GET['flag'])){return false;}
-	return isset($_COOKIE['user'])||isset($_SESSION['user']);
+	$user = new user();
+	return $user->isLogin();
 }
 
 function site_return($adress){
@@ -13,30 +14,20 @@ function site_return($adress){
 }
 
 function autorize($login,$pass){
-	if($login == ''||$pass == ''){
-		return false;
-	}
-
-	//запрос к бд
 	
+	$db_users = new db();
 	$row = [];
-	$row = qdb("select * from users where login='".$login."' and password='".$pass."';");
-	
+	$row = $db_users->query_db("select * from users where login='".$login."' and password='".$pass."';");
 	
 	if(isset($row[0]['login'])){
-			setcookie('user', $login, time()+3600);
-			$_SESSION['user'] = $login;
-			return true;
+			$user = new user();
+			return $user->autorize($login);
 		}
-	
-
 	return false;
 }
 
 function User_Exit(){
-	setcookie('user', '', time()-55600);
-	unset($_SESSION['user']);
-	header('Location: index.php');
-	die();
+	$user = new user();
+	$user->out();
 }
 ?>
