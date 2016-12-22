@@ -1,7 +1,6 @@
 <?php
 session_start();
-include __DIR__.'\..\class\class_db.php';
-include __DIR__.'\..\class\class_user.php';
+include __DIR__.'\..\config.php';
 
 function isLogin(){
 	$user = new user();
@@ -14,7 +13,7 @@ function site_return($adress){
 }
 
 function autorize($login,$pass){
-	
+
 	$db_users = new db();
 	$row = [];
 	$row = $db_users->query_db("select * from users where login='".$login."' and password='".$pass."';");
