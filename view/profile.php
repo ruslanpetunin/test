@@ -5,7 +5,7 @@
 </head>
 <body>
 <h1>Hello <?php echo $_SESSION['user'];?> </h1>
-<a href="/test/index.php?flag=true">exit</a>
+<a href="/test/index.php?check_out=true">exit</a>
 <br>
 
 </body>

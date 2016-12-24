@@ -1,15 +1,15 @@
 <?php
-include __DIR__.'\models\function_login.php';
+include __DIR__.'\config.php';
 
-if(isset($_GET['flag']) && $_GET['flag']==true){
-	User_Exit();
+$user = new user;
 
-	}
-
-if(isLogin()){
-	site_return('\profile_control.php');
+if(isset($_GET['check_out'])){
+	$user->out();
+}elseif($user->check_log()){
+	header("Location: profile.php");
+	die();
 }
 
-include __DIR__.'\view\login.php';
+include __DIR__.'\view\index.php';
 
 ?>
