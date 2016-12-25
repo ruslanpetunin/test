@@ -1,16 +1,15 @@
 <?php
 include __DIR__.'\config.php';
 
-$user = new user();
+$this_page = new image_gallery_page();
 
-if(isset($_POST['login']) && isset($_POST['password'])){
-	$user->autorization($_POST['login'], $_POST['password']);
+if($this_page->user_identification()){
+	$this_page->view();
 }
-if(!$user->check_log()){
-	header("Location: index.php");
+else{
 	die();
 }
 
-include __DIR__.'\view\profile.php';
+
 
 ?>

@@ -8,6 +8,9 @@
 		elseif(file_exists(__DIR__.'/models/class_'.$class.'.php')){
 			include __DIR__.'/models/class_'.$class.'.php';
 		}
+		elseif(file_exists(__DIR__.'/controlers/class_'.$class.'.php')){
+			include __DIR__.'/controlers/class_'.$class.'.php';
+		}
 	}
 
 ?>

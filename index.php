@@ -1,15 +1,12 @@
 <?php
 include __DIR__.'\config.php';
 
-$user = new user;
-
-if(isset($_GET['check_out'])){
-	$user->out();
-}elseif($user->check_log()){
-	header("Location: profile.php");
-	die();
-}
-
-include __DIR__.'\view\index.php';
+	$this_page = new start_page();
+	if(!$this_page->autorization_user()){
+		$this_page->view();
+	}
+	else{
+		die();
+	}
 
 ?>
