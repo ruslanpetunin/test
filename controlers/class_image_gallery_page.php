@@ -1,6 +1,7 @@
 <?php
 	
 	class image_gallery_page{
+
 		function user_identification(){
 			$user = new user();
 
@@ -15,8 +16,10 @@
 		}
 
 		function view(){
+			$page = new view();
+			$page->UserName = $_SESSION['user'];
+			echo $page->render('profile.php');
 
-			include __DIR__.'\..\view\profile.php';
 		}
 	}
 ?>

@@ -16,7 +16,8 @@
 		}
 
 		function view(){
-			include __DIR__.'\..\view\index.php';
+			$page = new view();
+			echo $page->render("index.php");
 		}
 	}
 
