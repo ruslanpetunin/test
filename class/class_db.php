@@ -19,9 +19,9 @@
 			public function query($query,$arr = []){
 				
 				$sth = $this->connection->prepare($query);
-
 				$sth->execute($arr);
 				$result = $sth->fetchAll(Pdo::FETCH_CLASS, $this->class_name);
+
 				return $result;
 			}
 			public function set_class_name($name){

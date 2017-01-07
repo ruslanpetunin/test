@@ -31,7 +31,7 @@
 
 			$db = new db();
 			$db->set_class_name(get_called_class());
-			$query1 = "insert into ".static::$table." (";
+			/*$query1 = "insert into ".static::$table." (";
 			$query2 = ' values (';
 			$lookup = [];
 
@@ -43,8 +43,16 @@
 			$query1 = substr($query1, 0, strlen($query1)-1);
 			$query2 = substr($query2, 0, strlen($query2)-1);
 			$query1 =$query1.")";
-			$query = $query1.$query2.")";
+			$bary = $query1.$query2.")";*/
+			$lookup = [];
 
+			foreach ($array as $key => $value) {
+
+				$lookup[":".$key] = $value;
+			}
+
+			$query ="insert into ". static::$table ." (".implode(', ', array_keys($array)).") values (".implode(", ", array_keys($lookup)).");";
+	
 			return $db->query($query,$lookup);
 		}
 

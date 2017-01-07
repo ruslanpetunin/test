@@ -3,6 +3,17 @@
 		extends AbstractModel{
 
 			protected static $table = "image";
+			protected $data = [];
+
+			public function __set($k, $v){
+
+				$this->data[$k] = $v;
+			}
+
+			public function __get($key){
+
+				return $this->data[$key];
+			}
 
 			public static function change($id, $id_user, $name_image, $path){
 
