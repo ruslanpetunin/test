@@ -1,8 +1,13 @@
 <?php
 	
 	class image_gallery_page{
+		protected $page;
 
-		function user_identification(){
+		public function __construct(){
+			$this->page = new view();
+		}
+
+		public function user_identification(){
 			$user = new user();
 
 			if(isset($_POST['login']) && isset($_POST['password'])){
@@ -12,13 +17,20 @@
 			header("Location: /test/index.php");
 			die();
 			}
+
 			return true;
 		}
 
-		function view(){
-			$page = new view();
-			$page->UserName = $_SESSION['user'];
-			echo $page->render('profile.php');
+		public function getData(){
+
+			if(isset($_FILES['image'])){Image::upload($_FILES['image'], $_POST['name_image'], User::getMyId());}
+			$this->page->Images = Image::getAll_forUser(User::getMyId());
+			$this->page->UserName = $_SESSION['user'];
+		}
+
+		public function view(){
+		
+			echo $this->page->render('profile.php');
 
 		}
 	}

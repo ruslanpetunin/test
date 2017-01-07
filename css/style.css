@@ -1,0 +1,10 @@
+.galleryImage{
+	width: 200px;
+	height: 200px;
+}
+
+.explanation{
+	text-align: center;
+	margin:0px;
+	margin-top: -5px;
+}
