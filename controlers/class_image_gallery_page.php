@@ -23,7 +23,13 @@
 
 		public function getData(){
 
-			if(isset($_FILES['image'])){Image::upload($_FILES['image'], $_POST['name_image'], User::getMyId());}
+			if(isset($_FILES['image'])){
+				$image = new Image();
+				$image->path = "/test/img/" . $image::UploadFile($_FILES['image']);
+				$image->id_user = User::getMyId();
+				if($_POST['name_image']!=''){$image->name_image = $_POST['name_image'];}
+				$image->save();}
+			
 			$this->page->Images = Image::getAll_forUser(User::getMyId());
 			$this->page->UserName = $_SESSION['user'];
 		}

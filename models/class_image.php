@@ -1,13 +1,17 @@
 <?php
 	class Image
-		extends AbstractModel{
+		extends AbstractModel 
+			implements Iterator{
 
 			protected static $table = "image";
 			protected $data = [];
+			protected $keys = [];
+			protected $number = 0;
 
 			public function __set($k, $v){
 
 				$this->data[$k] = $v;
+				$this->keys[] = $k;
 			}
 
 			public function __get($key){
@@ -15,6 +19,29 @@
 				return $this->data[$key];
 			}
 
+			public function __isset($key){
+				return isset($this->data[$key]);
+			}
+
+			public function current(){
+				return $this->data[$this->keys[$this->number]];
+			}
+
+			public function key(){
+				return $this->keys[$this->number];
+			}
+
+			public function next(){
+				$this->number++;
+			}
+
+			public function rewind(){
+				$this->number=0;
+			}
+
+			public function valid(){
+				return isset($this->keys[$this->number]);
+			}
 			public static function change($id, $id_user, $name_image, $path){
 
 				$arr['id_user'] = $id_user;
@@ -32,16 +59,10 @@
 
 			}
 
-			public static function upload($Files, $name = '', $id_user){
+			public function save(){
 
-				$arr['id_user'] = $id_user;
-				$arr['path'] = "/test/img/". parent::UploadFile($Files);
-				$arr['name_image'] = basename($arr['path']);
-				
-				//var_dump($arr);die();
-				if($name != null){$arr['name_image'] = $name; }
-
-				return parent::insert($arr);
+				if(!isset($this->name_image)){$this->name_image = explode('.', basename($this->path))[0];}
+				return parent::insert($this->data);
 			}
 
 			public static function getAll_forUser($id_user){
