@@ -1,4 +1,9 @@
 <?php
+
+namespace app\helpers;
+
+use app\helpers\db;
+
 	abstract class AbstractModel{
 		protected static $table;
 
@@ -27,23 +32,39 @@
 			return $db->query("select * from ".static::$table." where id=".$id)[0];
 		}
 
-		public static function insert($array){
+
+		public function selectWhere($arr){
+			if(is_array($arr)){
+				$db = new db();
+				$db->set_class_name(get_called_class());
+				$lookup = [];
+				$query = "select * from ".static::$table." where ";
+				$i = 1;
+				$len = count($arr);
+
+				foreach ($arr as $key => $value) {
+
+					$lookup[":".$key] = is_string($value)?"'".$value."'" : $value;
+
+					if($i<$len){
+							$query .= $key."=".$lookup[':'.$key]." and ";
+						}
+					else{
+							$query .= $key."=".$lookup[':'.$key];
+						}
+					$i++;
+				}
+			
+				return $db->query($query, $lookup);
+				
+			}
+			else{return false;}
+		}
+
+		public function insert($array){
 
 			$db = new db();
 			$db->set_class_name(get_called_class());
-			/*$query1 = "insert into ".static::$table." (";
-			$query2 = ' values (';
-			$lookup = [];
-
-			foreach ($array as $key => $value) {
-				$query1 = $query1." ".$key.",";
-				$query2 = $query2." '".$value."',";
-				$lookup[":".$key] = $value;
-			}
-			$query1 = substr($query1, 0, strlen($query1)-1);
-			$query2 = substr($query2, 0, strlen($query2)-1);
-			$query1 =$query1.")";
-			$bary = $query1.$query2.")";*/
 			$lookup = [];
 
 			foreach ($array as $key => $value) {
@@ -56,7 +77,9 @@
 			return $db->query($query,$lookup);
 		}
 
-		public static function update($id, $array){
+
+
+		public function update($id, $array){
 
 			if(!is_array($array) || count($array)==0 ){return false;}
 			$db = new db();
@@ -76,8 +99,6 @@
 
 			return true;
 			
-			/*
-			return $db->query("update ".static::$table." set path=:path where id=:id",[":path" => "авыаывп", ":id" => $id]);*/
 			}
 	}
 ?>

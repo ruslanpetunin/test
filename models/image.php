@@ -1,7 +1,13 @@
 <?php
+
+namespace app\models;
+
+use app\helpers\db;
+use app\helpers\AbstractModel;
+
 	class Image
 		extends AbstractModel 
-			implements Iterator{
+			implements \Iterator{
 
 			protected static $table = "image";
 			protected $data = [];
@@ -42,33 +48,23 @@
 			public function valid(){
 				return isset($this->keys[$this->number]);
 			}
-			public static function change($id, $id_user, $name_image, $path){
-
-				$arr['id_user'] = $id_user;
-				$arr['name_image'] = $name_image;
-				$arr['path'] = $path;
-				
-
-				foreach ($arr as $key => $value) {
-					if($value === null){
-						unset($arr[$key]);
-					}
-				}
-				
-				return parent::update($id,$arr);
-
-			}
 
 			public function save(){
-
-				if(!isset($this->name_image)){$this->name_image = explode('.', basename($this->path))[0];}
-				return parent::insert($this->data);
+				if(!isset($this->data['id'])){
+					parent::insert($this->data);
+				}
+				else{
+					$id = $this->data['id'];
+					unset($this->data['id']);
+					foreach ($this->keys as $key => $value) {
+						if($value == 'id'){unset($this->keys[$key]);}
+					}
+					parent::update($id, $this->data);
+				}
 			}
 
 			public static function getAll_forUser($id_user){
-				$db = new db;
-				$db->set_class_name(get_called_class());
-				return $db->query('select * from '.static::$table.' where id_user=:id', [":id" => $id_user]);
+				return parent::selectWhere(['id_user' => $id_user]);
 			}
 		}
 

@@ -1,5 +1,6 @@
 <?php
-	
+
+namespace app\helpers;
 
 	class db{
 
@@ -12,7 +13,7 @@
 
 			public function __construct(){
 				$dsn = 'mysql:dbname='.$this->db.';host='.$this->host;
-				$this->connection = new Pdo($dsn, $this->user, $this->pass);
+				$this->connection = new \Pdo($dsn, $this->user, $this->pass);
 			}
 
 			
@@ -20,7 +21,7 @@
 				
 				$sth = $this->connection->prepare($query);
 				$sth->execute($arr);		
-				$result = $sth->fetchAll(Pdo::FETCH_CLASS, $this->class_name);
+				$result = $sth->fetchAll(\Pdo::FETCH_CLASS, $this->class_name);
 				
 				return $result;
 			}

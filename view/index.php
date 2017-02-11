@@ -9,21 +9,12 @@
 	<title>Вход</title>
 </head>
 <body background="/test/img/fon.jpg">
-<!--<form action="profile.php" method="POST">
-<label>Логин</label>
-<input type="text"  required>
-<br><br>
-<label>Пароль</label>
-<input type="password" required>
-<br><br>
-<input type="submit">
-</form>-->
 
 <div class="container-fluid">
 
   <div class="container" id="my">
   	<h2 class="text-center">Авторизация</h2>
-		<form class="navbar-form navbar-left center-block text-center" method="POST" action="/test/profile.php" role="search">
+		<form class="navbar-form navbar-left center-block text-center" method="POST" action="/test/index.php" role="search">
     		<input type="text" class="form-control" placeholder="Login" name="login"><br>
     		<input type="password" class="form-control" placeholder="Password" name="password"><br>
    			 <button type="submit" class="btn btn-default">Войти в систему</button>
